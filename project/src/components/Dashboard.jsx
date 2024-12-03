@@ -46,7 +46,7 @@ export default function Dashboard() {
       try {
         setIsLoading(true);
         setError(null);
-        const response = await axios.get('http://localhost:5000/api/stats/detailed');
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/stats/detailed`);
         setStats(response.data);
       } catch (error) {
         setError(error.message);

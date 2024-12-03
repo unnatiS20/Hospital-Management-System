@@ -35,9 +35,9 @@ export default function Appointments() {
     setError(null);
     try {
       const [appointmentsRes, doctorsRes, patientsRes] = await Promise.all([
-        axios.get('http://localhost:5000/api/appointments'),
-        axios.get('http://localhost:5000/api/doctors'),
-        axios.get('http://localhost:5000/api/patients')
+        axios.get(`${import.meta.env.VITE_API_URL}/api/appointments`),
+        axios.get(`${import.meta.env.VITE_API_URL}/api/doctors`),
+        axios.get(`${import.meta.env.VITE_API_URL}/api/patients`)
       ]);
       
       setAppointments(appointmentsRes.data);
@@ -67,10 +67,10 @@ export default function Appointments() {
     e.preventDefault();
     try {
       if (editingAppointment) {
-        await axios.put(`http://localhost:5000/api/appointments/${editingAppointment._id}`, formData);
+        await axios.put(`${import.meta.env.VITE_API_URL}/api/appointments/${editingAppointment._id}`, formData);
         toast.success('Appointment updated successfully');
       } else {
-        await axios.post('http://localhost:5000/api/appointments', formData);
+        await axios.post(`${import.meta.env.VITE_API_URL}/api/appointments`, formData);
         toast.success('Appointment scheduled successfully');
       }
       setShowForm(false);
@@ -86,7 +86,7 @@ export default function Appointments() {
     setIsLoading(true);
     setError(null);
     try {
-      let url = 'http://localhost:5000/api/appointments';
+      let url = `${import.meta.env.VITE_API_URL}/api/appointments`;
       
       if (dateFilter === 'range' && searchDate) {
         const startDate = new Date(searchDate);
@@ -126,7 +126,7 @@ export default function Appointments() {
 
   const updateAppointmentStatus = async (id, status) => {
     try {
-      await axios.patch(`http://localhost:5000/api/appointments/${id}/status`, { status });
+      await axios.patch(`${import.meta.env.VITE_API_URL}/api/appointments/${id}/status`, { status });
       toast.success('Appointment status updated');
       fetchFilteredAppointments();
     } catch (error) {
@@ -137,7 +137,7 @@ export default function Appointments() {
   const handleDelete = async (id) => {
     if (window.confirm('Are you sure you want to delete this appointment?')) {
       try {
-        await axios.delete(`http://localhost:5000/api/appointments/${id}`);
+        await axios.delete(`${import.meta.env.VITE_API_URL}/api/appointments/${id}`);
         toast.success('Appointment deleted successfully');
         fetchData();
       } catch (error) {

@@ -23,7 +23,7 @@ export default function Doctors() {
     setIsLoading(true)
     setError(null)
     try {
-      const response = await axios.get('http://localhost:5000/api/doctors')
+      const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/doctors`)
       setDoctors(response.data)
     } catch (error) {
       setError(error.message)
@@ -41,10 +41,10 @@ export default function Doctors() {
     e.preventDefault()
     try {
       if (editingDoctor) {
-        await axios.put(`http://localhost:5000/api/doctors/${editingDoctor._id}`, formData)
+        await axios.put(`${import.meta.env.VITE_API_URL}/api/doctors/${editingDoctor._id}`, formData)
         toast.success('Doctor updated successfully')
       } else {
-        await axios.post('http://localhost:5000/api/doctors', formData)
+        await axios.post(`${import.meta.env.VITE_API_URL}/api/doctors`, formData)
         toast.success('Doctor added successfully')
       }
       setShowForm(false)
@@ -59,7 +59,7 @@ export default function Doctors() {
   const handleDelete = async (id) => {
     if (window.confirm('Are you sure you want to delete this doctor? All related appointments will also be deleted.')) {
       try {
-        await axios.delete(`http://localhost:5000/api/doctors/${id}`)
+        await axios.delete(`${import.meta.env.VITE_API_URL}/api/doctors/${id}`)
         toast.success('Doctor deleted successfully')
         fetchDoctors()
       } catch (error) {
